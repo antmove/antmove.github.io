@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>信用卡分批次还款额度计算</title>
+  
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link rel="manifest" href="https://demo.buzhoushan.top/qiyl/manifest.json">
+  <link rel="apple-touch-icon" href="https://demo.buzhoushan.top/qiyl/qiyl.png">
+  <link rel="shortcut icon" href="https://demo.buzhoushan.top/qiyl/qiyl.png">
+  <style type="text/css" media="screen">
+    html{font-size: 15px;}
+    .ele-container span{color:white;}
+    .result span{width:25%;display:inline-block;text-align:center;}
+    .result{width:90%;margin:0 auto;color:white;} 
+    body{max-width: 640px;margin: 0 auto;}
+    .page.zShow{background:#282f32;}
+    input{background:white;display:inline-block;width:6rem;vertical-align:middle;border-radius:5px;height:2rem;outline: none;}     
+  </style>
+</head>
+<body>
+  <div class="page zShow" id="div" style="min-height: 637px;">
+  <div class="top-nav background-ele" style="background-color:#353535; color:white; font-size: 1.2rem; height: 3rem;width:100%;text-align:center;line-height:3rem;font-weight:200">信用卡分批次还款额度计算</div>
+  <div class="ele-container" style="margin-top:10px;color: white;">
+    <div class="element input-ele js-form-ele" style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
+      <span>还款总额：</span><input type="number" id="total" onkeyup="this.value=this.value*1&gt;0?this.value*1:&#39;&#39;;calculation()">
+    </div>
+    <div class="element input-ele js-form-ele" style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
+      <span>还款期数：</span><input type="number" id="num" onkeyup="this.value=this.value*1&gt;0?(this.value*1&gt;99?this.value.slice(0,3):this.value*1):&#39;&#39;;calculation()">
+    </div>
+    <div class="element input-ele js-form-ele" style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
+      <span>上下浮动：</span><input type="number" id="float" style="width:2rem;" onkeyup="this.value=this.value*1&gt;0?(this.value*1&gt;99?this.value.slice(0,2):this.value*1):&#39;&#39;;calculation()"><span>%</span>
+    </div>
+  </div>
+  <div class="result" style="border-bottom:dotted;margin-top:1rem;display:none">
+    <span>期数</span>
+    <span>存款额</span>
+    <span>刷卡额</span>
+    <span>余额</span>
+  </div>
+  <div id="section"><div class="result" style="border-bottom:dotted;margin-top:1rem;padding-bottom: 0.3rem;"><span>期数</span><span>存款额</span><span>刷卡额</span><span>余额</span></div><div class="result" style="margin-top:5px"><span>1</span><span>1141</span><span>1121</span><span>20</span></div><div class="result" style="margin-top:5px"><span>2</span><span>1096</span><span>1099</span><span>17</span></div><div class="result" style="margin-top:5px"><span>3</span><span>905</span><span>880</span><span>42</span></div><div class="result" style="margin-top:5px"><span>4</span><span>1016</span><span>1033</span><span>25</span></div><div class="result" style="margin-top:5px"><span>5</span><span>1003</span><span>1008</span><span>20</span></div><div class="result" style="margin-top:5px"><span>6</span><span>870</span><span>877</span><span>13</span></div><div class="result" style="margin-top:5px"><span>7</span><span>1085</span><span>1053</span><span>45</span></div><div class="result" style="margin-top:5px"><span>8</span><span>1019</span><span>1041</span><span>23</span></div><div class="result" style="margin-top:5px"><span>9</span><span>930</span><span>936</span><span>17</span></div><div class="result" style="margin-top:5px"><span>10</span><span>935</span><span>952</span><span>0</span></div></div>
+</div>
+<script type="text/javascript">
+    var calculation = function(type){
+        if (type===true) {
+            var TOTAL = localStorage.total;
+            var NUM   = localStorage.num;
+            var FLOAT = localStorage.float;
+        }else{
+            var TOTAL = document.getElementById('total').value;
+            var NUM   = document.getElementById('num').value;
+            var FLOAT = document.getElementById('float').value/100;
+            localStorage.total = TOTAL;
+            localStorage.num = NUM;
+            localStorage.float = FLOAT;
+        }
+        console.log(TOTAL)
+        console.log(NUM)
+        console.log(FLOAT)
+        if (!(TOTAL+NUM+FLOAT)) {
+	        TOTAL = TOTAL>0?TOTAL*1:10000;
+	        NUM   = NUM>0?NUM*1:10;
+	        FLOAT = FLOAT>0?FLOAT*1:0.15;
+        }else if (!TOTAL || !NUM || !FLOAT) {
+        	return show([],[],[]);
+        }
+
+        document.getElementById('total').value = TOTAL;
+        document.getElementById('num').value   = NUM;
+        document.getElementById('float').value = FLOAT*100;
+        var average = parseInt(TOTAL/NUM);
+
+        var step0   = [];
+        var balance = [];
+        var a0 = 0;
+        var t0 = 0;
+        var b  = 0;
+        for (var i = 1; i < NUM; i++) {
+        	b  = Math.ceil(Math.random()*50);
+            a0 = parseInt(average * (1-FLOAT) +  Math.random() * FLOAT * 2 * average);
+            step0.push(a0);
+        	balance.push(b);
+            t0 += a0;
+        };
+        step0.push(TOTAL-t0);
+        balance.push(0);
+
+        var step1 = [];
+        var t1 = 0;
+        var a1 = 0;
+        var last = 0;
+        for (var i = 0; i <= NUM; i++) {
+        	a1 = step0[i] + last - balance[i];
+        	last = balance[i];
+        	if (a1<0) {
+        		return show([],[],[]);
+        	}
+            step1.push(a1);
+            t1 += a1;
+        };
+        step1.push(TOTAL-t1);
+        show( step0, step1, balance );
+    }
+    var show = function( step0, step1, balance ){
+        var str = '<div class="result" style="border-bottom:dotted;margin-top:1rem;padding-bottom: 0.3rem;"><span>期数</span><span>存款额</span><span>刷卡额</span><span>余额</span></div>';
+        for (var i = 0; i < step0.length; i++) {
+            str += '<div class="result" style="margin-top:5px"><span>'+(i+1)+'</span><span>'+step0[i]+'</span><span>'+step1[i]+'</span><span>'+balance[i]+'</span></div>';
+        };
+        document.getElementById("section").innerHTML = str;
+    }
+    document.getElementById('div').style['min-height'] = window.innerHeight+'px';
+    calculation(true);
+</script>
+
+</body></html>

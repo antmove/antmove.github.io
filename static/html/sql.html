@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta property="qc:admins" content="6042167177625207530166470" />
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>SQL导出Excel</title>
+        <style type="text/css">
+            h1{text-align: center;margin-top: 80px}
+            h1 a{text-decoration: none;color:white;background:#4977BF;padding:15px;border-radius:5px;}
+            #button1{background-color: #E6E6E6;display: block;width: 99px;height: 50px;float:right;border: 0;border-radius: 0 3px 3px 0;font-size: 1.1em}
+            #button2{background-color: #4CAF50;display: block;width: 99px;height: 50px;float:right;border: 0;border-radius: 0 3px 3px 0;color:white;font-size: 1.1em;display: none;cursor: pointer;}
+            #div:hover #button1 {color: #FFF;background-color: #4977BF;}
+            #sql{background-color: #FFF0F0;background-repeat: repeat;border: 1px dashed #E84C3D;width: 100%;height: 100%;position: relative;filter: alpha(opacity:0);opacity: 0;cursor: pointer;top:-50px;}
+            #div{border: 2px solid #E6E6E6;width:500px;height: 50px;border-radius: 0 6px 6px 0;margin:50px auto;font-size: 1.1em}
+            #div:hover {border-color: #4977BF;}
+            #textfield1{border:0px;width: 390px;height: 48px;padding-left:10px;font-size: 1.1em}
+        </style>
+    </head>
+    <body>
+        <h1> <a href="javascript:;" title="SQL导出Excel">SQL导出Excel</a> </h1>
+        <div id="div">
+            <input type="text" name="textfield" id="textfield1" placeholder="点击按钮选择数据库结构sql文件上传">
+            <input type="button" name="button" id="button1" value="选择上传...">
+            <input type="button" name="button" id="button2" value="导出" onclick="outExcel()">
+            <input type="file" id="sql" name="sql" title="点击按钮选择文件并提交表单后上传生效">
+        </div>
+    </body>
+    <script src="//asset.buzhoushan.top/js/jquery-v1.11.1.js"></script>
+    <script src="//asset.buzhoushan.top/js/qiniu/qiniu.min.js"></script>
+    <script src="//asset.buzhoushan.top/js/plupload/plupload.full.min.js"></script>
+    <script src="//asset.buzhoushan.top/js/layer/mobile/layer.js"></script>
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?3aad602e98484774087b1629d9008a9b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('l 7=\'\';$.P(\'k://m.h.8/o.p?s=L\',0(a,b){g(a.q)});0 g(d){t=\'5\';j=\'6\';l e=12.13({14:\'15,19,1e\',1i:t,q:d,1o:9,y:9,z:\'g\',A:j,B:\'C\',D:\'//E.h.8/F/G/H.I\',J:3,K:n,M:j,N:\'O\',1A:{Q:[{R:"7 S",T:"5"},]},U:n,V:{\'W\':0(a,b){},\'X\':0(a,b,c){7=Y.Z(c).10.11(4);1.r();1.i({f:\'上传成功！\',16:\'17\',18:2})},\'1a\':0(a,b,c){1.r();1.i({f:c,1b:\'我知道了\'})},\'1c\':0(){},\'1d\':0(a,b){1.i({u:2,f:\'文件上传中。。。\',1f:9,});$(\'#1g\').1h(b.v);$(\'#1j\').1k();$(\'#1l\').1m();$(\'[u=1n],#6 6\').w(\'1p\',\'1q\');$(\'#6\').w(\'1r-1s\',\'#1t\');1u\'5/\'+b.1v+\'-1w-\'+b.v}}})}0 1x(){1y.1z=\'k://m.h.8/o.p?s=x/5/\'+7}',62,99,'function|layer||||sql|div|SQL|top|false||||||content|upload|buzhoushan|open|parentId|http|var|api|true|index|php|uptoken|closeAll||selfId|type|name|css|transSql|unique_names|domain|container|max_file_size|2mb|flash_swf_url|asset|js|plupload|Moxie|swf|max_retries|dragdrop|qiniu|drop_element|chunk_size|4mb|getJSON|mime_types|title|files|extensions|auto_start|init|UploadProgress|FileUploaded|JSON|parse|key|slice|Qiniu|uploader|runtimes|html5|skin|msg|time|flash|Error|btn|UploadComplete|Key|html4|shadeClose|textfield1|val|browse_button|button2|show|button1|hide|file|get_new_uptoken|width|400px|border|color|4CAF50|return|id|xcw|outExcel|location|href|filters'.split('|'),0,{}))
+    </script>
+</html>
