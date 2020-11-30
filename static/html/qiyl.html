@@ -1,71 +1,75 @@
 <!DOCTYPE html>
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>信用卡分批次还款额度计算</title>
-  
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  <link rel="manifest" href="https://demo.buzhoushan.top/qiyl/manifest.json">
-  <link rel="apple-touch-icon" href="https://demo.buzhoushan.top/qiyl/qiyl.png">
-  <link rel="shortcut icon" href="https://demo.buzhoushan.top/qiyl/qiyl.png">
-  <style type="text/css" media="screen">
-    html{font-size: 15px;}
-    .ele-container span{color:white;}
-    .result span{width:25%;display:inline-block;text-align:center;}
-    .result{width:90%;margin:0 auto;color:white;} 
-    body{max-width: 640px;margin: 0 auto;}
-    .page.zShow{background:#282f32;}
-    input{background:white;display:inline-block;width:6rem;vertical-align:middle;border-radius:5px;height:2rem;outline: none;}     
-  </style>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>信用卡分批次还款额度计算</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="manifest" href="https://demo.buzhoushan.top/qiyl/manifest.json">
+    <link rel="apple-touch-icon" href="https://demo.buzhoushan.top/qiyl/qiyl.png">
+    <link rel="shortcut icon" href="https://demo.buzhoushan.top/qiyl/qiyl.png">
+    <style type="text/css" media="screen">
+        html{font-size: 15px;}
+        body{-webkit-touch-callout: none;-moz-user-select: none; /*火狐*/-webkit-user-select: none;  /*webkit浏览器*/-ms-user-select: none;   /*IE10*/-khtml-user-select: none; /*早期浏览器*/ user-select: none;}
+        .ele-container span{color:white;}
+        .result span{width:25%;display:inline-block;text-align:center;}
+        .result{width:90%;margin:0 auto;color:white;} 
+        body{max-width: 640px;margin: 0 auto;}
+        .page.zShow{background:#282f32;}
+        input{background:white;display:inline-block;width:6rem;vertical-align:middle;border-radius:5px;height:2rem;outline: none;}
+    </style>
 </head>
 <body>
-  <div class="page zShow" id="div" style="min-height: 637px;">
-  <div class="top-nav background-ele" style="background-color:#353535; color:white; font-size: 1.2rem; height: 3rem;width:100%;text-align:center;line-height:3rem;font-weight:200">信用卡分批次还款额度计算</div>
-  <div class="ele-container" style="margin-top:10px;color: white;">
-    <div class="element input-ele js-form-ele" style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
-      <span>还款总额：</span><input type="number" id="total" onkeyup="this.value=this.value*1&gt;0?this.value*1:&#39;&#39;;calculation()">
+    <div class="page zShow" id="div" style="min-height: 637px;">
+    <div class="top-nav background-ele" style="background-color:#353535; color:white; font-size: 1.2rem; height: 3rem;width:100%;text-align:center;line-height:3rem;font-weight:200">信用卡分批次还款额度计算</div>
+    <div class="ele-container" style="margin-top:10px;color: white;" onclick="calculation()">
+        <div style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
+            <span>还款总额：</span>
+            <input type="number" id="total" onkeyup="this.value=this.value*1>0?this.value*1:'';calculation()" onclick="event.stopPropagation()">
+        </div>
+        <div style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
+            <span>还款期数：</span>
+            <input type="number" id="num" onkeyup="this.value=this.value*1>0?(this.value*1>100?100:this.value*1):'';calculation()" onclick="event.stopPropagation()">
+        </div>
+        <div style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
+            <span>上下浮动：</span>
+            <input type="number" id="float" style="width:3rem;" max="100" onkeyup="this.value=this.value*1>0?(this.value*1>100?100:this.value*1):'';calculation()" onclick="event.stopPropagation()">
+            <span>%</span>
+        </div>
+        <div style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
+            <span>首期限额：</span>
+            <input type="number" id="limit" min="100" onkeyup="this.value=this.value*1>0?(this.value*1>10000?10000:this.value*1):'';calculation()" onclick="event.stopPropagation()">
+        </div>
     </div>
-    <div class="element input-ele js-form-ele" style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
-      <span>还款期数：</span><input type="number" id="num" onkeyup="this.value=this.value*1&gt;0?(this.value*1&gt;99?this.value.slice(0,3):this.value*1):&#39;&#39;;calculation()">
-    </div>
-    <div class="element input-ele js-form-ele" style="margin-left: 2rem; width: 16rem; height:3rem;line-height:3rem;font-size:1.2rem;">
-      <span>上下浮动：</span><input type="number" id="float" style="width:2rem;" onkeyup="this.value=this.value*1&gt;0?(this.value*1&gt;99?this.value.slice(0,2):this.value*1):&#39;&#39;;calculation()"><span>%</span>
-    </div>
-  </div>
-  <div class="result" style="border-bottom:dotted;margin-top:1rem;display:none">
-    <span>期数</span>
-    <span>存款额</span>
-    <span>刷卡额</span>
-    <span>余额</span>
-  </div>
-  <div id="section"><div class="result" style="border-bottom:dotted;margin-top:1rem;padding-bottom: 0.3rem;"><span>期数</span><span>存款额</span><span>刷卡额</span><span>余额</span></div><div class="result" style="margin-top:5px"><span>1</span><span>1141</span><span>1121</span><span>20</span></div><div class="result" style="margin-top:5px"><span>2</span><span>1096</span><span>1099</span><span>17</span></div><div class="result" style="margin-top:5px"><span>3</span><span>905</span><span>880</span><span>42</span></div><div class="result" style="margin-top:5px"><span>4</span><span>1016</span><span>1033</span><span>25</span></div><div class="result" style="margin-top:5px"><span>5</span><span>1003</span><span>1008</span><span>20</span></div><div class="result" style="margin-top:5px"><span>6</span><span>870</span><span>877</span><span>13</span></div><div class="result" style="margin-top:5px"><span>7</span><span>1085</span><span>1053</span><span>45</span></div><div class="result" style="margin-top:5px"><span>8</span><span>1019</span><span>1041</span><span>23</span></div><div class="result" style="margin-top:5px"><span>9</span><span>930</span><span>936</span><span>17</span></div><div class="result" style="margin-top:5px"><span>10</span><span>935</span><span>952</span><span>0</span></div></div>
+    <div id="section"></div>
 </div>
 <script type="text/javascript">
-    var calculation = function(type){
-        if (type===true) {
-            var TOTAL = localStorage.total;
-            var NUM   = localStorage.num;
-            var FLOAT = localStorage.float;
-        }else{
-            var TOTAL = document.getElementById('total').value;
-            var NUM   = document.getElementById('num').value;
-            var FLOAT = document.getElementById('float').value/100;
-            localStorage.total = TOTAL;
-            localStorage.num = NUM;
-            localStorage.float = FLOAT;
-        }
-        console.log(TOTAL)
-        console.log(NUM)
-        console.log(FLOAT)
+    document.getElementById('total').value = localStorage.total||10000;
+    document.getElementById('num').value   = localStorage.num||10;
+    document.getElementById('float').value = localStorage.float*100||15;
+    document.getElementById('limit').value = localStorage.limit||1000;;
+    var calculation = function(){
+        var TOTAL = document.getElementById('total').value;
+        var NUM   = document.getElementById('num').value;
+        var FLOAT = parseInt(document.getElementById('float').value)/100;
+        var LIMIT = parseInt(document.getElementById('limit').value);
+        localStorage.total = TOTAL;
+        localStorage.num = NUM;
+        localStorage.float = FLOAT;
+        localStorage.limit = LIMIT;
         if (!(TOTAL+NUM+FLOAT)) {
 	        TOTAL = TOTAL>0?TOTAL*1:10000;
 	        NUM   = NUM>0?NUM*1:10;
-	        FLOAT = FLOAT>0?FLOAT*1:0.15;
+            FLOAT = FLOAT>0?FLOAT*1:0.15;
+	        LIMIT = LIMIT>100?LIMIT:1000;
         }else if (!TOTAL || !NUM || !FLOAT) {
+            console.log('空');
         	return show([],[],[]);
         }
 
         document.getElementById('total').value = TOTAL;
         document.getElementById('num').value   = NUM;
-        document.getElementById('float').value = FLOAT*100;
+        document.getElementById('float').value = parseInt(FLOAT*100);
+        document.getElementById('limit').value = LIMIT;
         var average = parseInt(TOTAL/NUM);
 
         var step0   = [];
@@ -74,8 +78,14 @@
         var t0 = 0;
         var b  = 0;
         for (var i = 1; i < NUM; i++) {
-        	b  = Math.ceil(Math.random()*50);
-            a0 = parseInt(average * (1-FLOAT) +  Math.random() * FLOAT * 2 * average);
+            /*20-60*/
+        	b  = 20 + Math.ceil(Math.random()*40);
+            if (i===1&&!!LIMIT){
+                var limit = LIMIT>TOTAL/NUM*3 ? TOTAL/NUM*3 : LIMIT < 100 ? 100 : LIMIT;
+                a0 = firstVal(limit);
+            }else{
+                a0 = getVal(average, FLOAT);
+            }
             step0.push(a0);
         	balance.push(b);
             t0 += a0;
@@ -91,6 +101,13 @@
         	a1 = step0[i] + last - balance[i];
         	last = balance[i];
         	if (a1<0) {
+                var refresh = localStorage.refresh;
+                console.log('刷新：'+refresh)
+                if (refresh<100){
+                    localStorage.refresh = ++refresh;
+                    return calculation();
+                }
+                localStorage.refresh = 0;
         		return show([],[],[]);
         	}
             step1.push(a1);
@@ -98,6 +115,21 @@
         };
         step1.push(TOTAL-t1);
         show( step0, step1, balance );
+    }
+    var firstVal = function(limit){
+        var val = parseInt(Math.random() * limit);
+        if(val<limit/2){
+            return firstVal(limit)
+        }
+        return val;
+    }
+    var getVal = function(average, FLOAT){
+        // var val = parseInt(average * (Math.ceil(Math.random()*100)%2?(1-FLOAT*Math.random()):(1+FLOAT*Math.random())));
+        var val = parseInt(average * (1-FLOAT) +  Math.random() * FLOAT * 2 * average);
+        if (val>999&&val<1300){
+            return getVal(average, FLOAT);
+        }
+        return val;
     }
     var show = function( step0, step1, balance ){
         var str = '<div class="result" style="border-bottom:dotted;margin-top:1rem;padding-bottom: 0.3rem;"><span>期数</span><span>存款额</span><span>刷卡额</span><span>余额</span></div>';
@@ -107,7 +139,7 @@
         document.getElementById("section").innerHTML = str;
     }
     document.getElementById('div').style['min-height'] = window.innerHeight+'px';
-    calculation(true);
+    calculation();
 </script>
 
 </body></html>
