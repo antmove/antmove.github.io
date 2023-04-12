@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv ="Content-Security-Policy" content="upgrade-insecure-requests">
+        <title>\u 转码 Unicode转码</title>
+        <style type="text/css">
+            h1{text-align: center;margin-top: 80px}
+            h1 a{text-decoration: none;color:white;background:#4977BF;padding:15px;border-radius:5px;}
+            .button1{width: 99px;height: 50px;border: 0;border-radius: 3px;font-size: 1.1em;color: #FFF;background-color: #4977BF;cursor: pointer;}
+            #div{margin:50px auto;font-size: 1.1em;max-width: 500px;}
+            #textfield1{border: 2px solid #4977BF;border-radius: 6px;max-width:90%;height: 150px;padding-left: 10px;font-size: 1.1em;outline: none;resize:none;width: 95%;max-width: 500px;}
+        </style>
+    </head>
+    <body>
+        <h1> <a href="javascript:;" title="\u转码">\u 转码</a> </h1>
+        <div id="div">
+            <textarea id="textfield1"></textarea>
+            <input type="button" name="button" class="button1" value="转GB2132" onclick="trans(1)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" name="button" class="button1" value="转Unicode" onclick="trans(2)">
+        </div>
+    </body>
+    <script type="text/javascript">
+    	eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4 2={5:3(a){6 g(a).h().7(/%0/8,"\\\\0")},9:3(a){6 i(a.7(/\\\\0/8,"%0"))}},j=3(a){4 b=c.d("#e").f;b=1==a?2.9(b):2.5(b);c.d("#e").f=b};',20,20,'u||GB2312UnicodeConverter|function|var|ToUnicode|return|replace|gi|ToGB2312|||document|querySelector|textfield1|value|escape|toLocaleLowerCase|unescape|trans'.split('|'),0,{}))
+    </script>
+</html>
